@@ -127,7 +127,20 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const searchUserByName = async (req, res) => {
+  try {
+    const { name } = req.params;
 
+    const result = await pool.query(
+      "SELECT * FROM users WHERE name ILIKE $1",
+      [`%${name}%`]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // EXPORT ALL
 module.exports = {
@@ -137,5 +150,6 @@ module.exports = {
   updateUser,
   patchUser,
   deleteUser,
+  searchUserByName,
 };
 

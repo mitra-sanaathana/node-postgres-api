@@ -1,0 +1,20 @@
+{
+  "name": "fullstack-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitra-sanaathana/node-postgres-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mitra-sanaathana/node-postgres-api/issues"
+  },
+  "homepage": "https://github.com/mitra-sanaathana/node-postgres-api#readme"
+}

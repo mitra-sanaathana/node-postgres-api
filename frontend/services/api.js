@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "yamabiko.proxy.rlwy.net:36946",
 });
 
 export default API;

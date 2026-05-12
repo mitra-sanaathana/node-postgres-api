@@ -1,9 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const path = require("path");
 require("dotenv").config();
 
 const pool = require("./db");
+
+// Serve static frontend
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// React fallback route
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/dist/index.html")
+  );
+});
 
 // Routes
 const userRoutes = require("./routes/users");

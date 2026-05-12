@@ -8,6 +8,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  searchUserByName,
 } = require("../controllers/userController");
 
 // GET all users
@@ -25,6 +26,6 @@ router.put("/:id", updateUser);
 // DELETE user
 router.delete("/:id", deleteUser);
 
-//router.get("/search/:name", searchUserByName);
+router.get("/search/:name", searchUserByName);
 
 module.exports = router;
