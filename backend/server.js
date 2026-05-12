@@ -14,36 +14,26 @@ const app = express();
 // ======================
 // Middleware
 // ======================
-
 app.use(cors());
-
-app.use(
-  morgan("dev")
-);
-
+app.use(morgan("dev"));
 app.use(express.json());
 
 // ======================
-// API Routes
+// API ROUTES
 // ======================
 
-// Home route
+// Health check
 app.get("/", (req, res) => {
-  res.json({
-    message: "REST API is running",
-  });
+  res.json({ message: "REST API is running" });
 });
 
-// Users routes
+// Users API
 app.use("/api/users", userRoutes);
 
-// Test database route
+// DB test route
 app.get("/test-db", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT NOW()"
-    );
-
+    const result = await pool.query("SELECT NOW()");
     res.json({
       success: true,
       time: result.rows[0],
@@ -57,20 +47,23 @@ app.get("/test-db", async (req, res) => {
 });
 
 // ======================
-// 404 Route Handler
+// SERVE FRONTEND (ONLY IN PRODUCTION)
 // ======================
 
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Route not found",
+if (process.env.NODE_ENV === "production") {
+  const frontendPath = path.join(__dirname, "../frontend/dist");
+
+  app.use(express.static(frontendPath));
+
+  // IMPORTANT: Express 5 SAFE fallback (NO "*")
+  app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
-});
+}
 
 // ======================
-// Global Error Handler
+// ERROR HANDLER
 // ======================
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
 
@@ -81,21 +74,10 @@ app.use((err, req, res, next) => {
 });
 
 // ======================
-// Server
+// START SERVER
 // ======================
-
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on ${PORT}`);
-});
-
-// Serve static frontend
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-// React fallback route
-app.use((req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../frontend/dist/index.html")
-  );
+  console.log(`Server running on port ${PORT}`);
 });

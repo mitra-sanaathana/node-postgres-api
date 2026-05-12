@@ -33,13 +33,13 @@ const getUserById = async (req, res) => {
 // CREATE user
 const createUser = async (req, res) => {
   try {
-    const { name, email, language, services } = req.body;
+    const { name, language, services } = req.body;
 
     const result = await pool.query(
-      `INSERT INTO users(name, email, language, services)
-       VALUES($1, $2, $3, $4)
+      `INSERT INTO users(name, language, services)
+       VALUES($1, $2, $3)
        RETURNING *`,
-      [name, email, language, services]
+      [name, language, services]
     );
 
     res.status(201).json(result.rows[0]);
@@ -52,14 +52,14 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, language, services } = req.body;
+    const { name, language, services } = req.body;
 
     const result = await pool.query(
       `UPDATE users
-       SET name=$1, email=$2, language=$3, services=$4
-       WHERE id=$5
+       SET name=$1, language=$2, services=$3
+       WHERE id=$4
        RETURNING *`,
-      [name, email, language, services, id]
+      [name, language, services, id]
     );
 
     if (result.rows.length === 0) {

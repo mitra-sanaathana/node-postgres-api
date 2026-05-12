@@ -1,30 +1,31 @@
 import { useState } from "react";
-import API from "../services/api";
+import API from "../../services/api";
 
 function SearchUser() {
   const [name, setName] = useState("");
-  const [users, setUsers] = useState([]);
+  const [results, setResults] = useState([]);
 
-  const handleSearch = async () => {
+  const searchUser = async () => {
     const res = await API.get(`/users/search/${name}`);
-    setUsers(res.data);
+    setResults(res.data);
   };
 
   return (
     <div>
+      <h1>Search User</h1>
+
       <input
         placeholder="Enter name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <button onClick={handleSearch}>
-        Search
-      </button>
+      <button onClick={searchUser}>Search</button>
 
-      {users.map((user) => (
+      {results.map((user) => (
         <div key={user.id}>
           <h3>{user.name}</h3>
+          <p>{user.email}</p>
         </div>
       ))}
     </div>

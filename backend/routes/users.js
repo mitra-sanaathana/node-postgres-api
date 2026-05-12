@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 
@@ -7,6 +6,7 @@ const {
   getUserById,
   createUser,
   updateUser,
+  patchUser,
   deleteUser,
   searchUserByName,
 } = require("../controllers/userController");
@@ -14,18 +14,23 @@ const {
 // GET all users
 router.get("/", getUsers);
 
-// GET single user
+// SEARCH user by name
+// IMPORTANT: must come BEFORE /:id
+router.get("/search/:name", searchUserByName);
+
+// GET single user by ID
 router.get("/:id", getUserById);
 
-// POST create user
+// CREATE user
 router.post("/", createUser);
 
-// PUT update user
+// FULL UPDATE user
 router.put("/:id", updateUser);
+
+// PARTIAL UPDATE user
+router.patch("/:id", patchUser);
 
 // DELETE user
 router.delete("/:id", deleteUser);
-
-router.get("/search/:name", searchUserByName);
 
 module.exports = router;
