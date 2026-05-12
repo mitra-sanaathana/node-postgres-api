@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 
@@ -23,5 +24,7 @@ router.put("/:id", updateUser);
 
 // DELETE user
 router.delete("/:id", deleteUser);
+
+//router.get("/search/:name", searchUserByName);
 
 module.exports = router;

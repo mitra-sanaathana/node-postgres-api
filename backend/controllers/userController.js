@@ -127,6 +127,8 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+
 // EXPORT ALL
 module.exports = {
   getUsers,
@@ -136,3 +138,4 @@ module.exports = {
   patchUser,
   deleteUser,
 };
+
